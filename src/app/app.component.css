@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
+.rate-limit-hit {
+	display: flex;
+	justify-content: center;
+}

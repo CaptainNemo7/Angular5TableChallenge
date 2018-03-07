@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="header">
+    <mat-form-field>
+      <input matInput (keyup)="search($event.target.value)" placeholder="Search">
+    </mat-form-field>
+  </div>
+
+  <div class="rate-limit-hit" *ngIf="isRateLimitReached">
+    <div *ngIf="isRateLimitReached">
+      CoinMarket API rate limit hit, please wait.
+    </div>
+  </div>
+
+  <mat-table #table [dataSource]="dataSource"
+             matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+
+    <ng-container matColumnDef="rank">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Rank</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.rank }}</mat-cell>
+    </ng-container>
+
+    
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.name }}</mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="symbol">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Symbol</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.symbol }}</mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="price_usd">
+      <mat-header-cell *matHeaderCellDef
+                       mat-sort-header
+                       disableClear="true">
+        Price in USD
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.price_usd }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="percent_change_1h">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>1 Hour Change</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.percent_change_1h }}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator [length]="resultsLength" [pageSize]="10">
+  </mat-paginator>
+
+
+  
+</div>
