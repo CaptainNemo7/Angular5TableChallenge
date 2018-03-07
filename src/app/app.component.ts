@@ -15,7 +15,7 @@ import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
   styleUrls: ['./app.component.css']
 })
 
-// Check here!!!   ExampleHttpDao
+
 export class AppComponent {
 	displayedColumns = ['rank', 'name', 'symbol', 'price_usd', 'percent_change_1h'];
   database: HttpRequest;
@@ -33,7 +33,7 @@ export class AppComponent {
   ngOnInit() {
     this.database = new HttpRequest(this.http);
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-    
+    console.log('sort ', this.paginator.pageIndex)
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
 
@@ -65,6 +65,7 @@ export class AppComponent {
 
   ngAfterViewInit() {
   	this.dataSource.sort = this.sort;
+  	this.dataSource.paginator = this.paginator;
   }
 
   search(item: string) {
@@ -92,7 +93,7 @@ export interface CoinMarket {
 export class HttpRequest {
   constructor(private http: HttpClient) {}
   getRepoIssues(sort: string, order: string, page: number): Observable<CoinMarketApi> {
-    const href = 'https://api.coinmarketcap.com/v1/ticker/?limit=20'
+    const href = 'https://api.coinmarketcap.com/v1/ticker/?limit=50'
     
     return this.http.get<CoinMarketApi>(href);
   }
